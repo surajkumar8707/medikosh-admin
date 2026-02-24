@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Contact;
 use App\Models\Gallery;
+use App\Models\Product;
 use App\Models\Setting;
 use App\Models\SocialMediaLink;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,9 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $products = Product::where('product_type', '0')->get()->count();
+        $product_verifications = Product::where('product_type', '1')->get()->count();
+        return view('admin.dashboard', compact('products', 'product_verifications'));
     }
 
     public function profile()
