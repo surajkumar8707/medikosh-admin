@@ -27,7 +27,6 @@ class ProductVerificationController extends Controller
     {
         $request->validate([
             'product_id' => 'required',
-            'name' => 'required|string|max:255',
             'mfg_date' => 'nullable|date',
             'exp_date' => 'nullable|date',
             'manufacturer' => 'nullable|string',
@@ -47,6 +46,7 @@ class ProductVerificationController extends Controller
             // Create product
             $product = Product::create([
                 'product_id' => $request->product_id,
+                'name' => $main_product_detail->name,
                 'mfg_date' => $request->mfg_date ?? NULL,
                 'exp_date' => $request->exp_date ?? NULL,
                 'manufacturer' => $request->manufacturer,
