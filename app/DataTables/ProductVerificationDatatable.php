@@ -39,6 +39,9 @@ class ProductVerificationDatatable extends DataTable
                 return 'Created: ' . $product->created_at->format('d M Y') . '<br>
                         Updated: ' . $product->updated_at->format('d M Y');
             })
+            ->addColumn('main_product_name', function (Product $product) {
+                return $product?->product?->name;
+            })
             ->addColumn('image', function (Product $product) {
                 // Load the first image
                 $image = $product->images()->first();
@@ -77,7 +80,7 @@ class ProductVerificationDatatable extends DataTable
                 return '<span class="text-muted">No batches</span>';
             })
             ->addColumn('product_url', function (Product $product) {
-                $html = '<a target="_blank" href="https://medikosh-nutria.daarukavaneresort.com/product/'. $product->id .'" class="btn btn-link">View <i class="fa fa-eye"></i></a>';
+                $html = '<a target="_blank" href="https://medikosh-nutria.daarukavaneresort.com/product/' . $product->id . '" class="btn btn-link">View <i class="fa fa-eye"></i></a>';
                 return new HtmlString($html);
             })
             ->addColumn('action', function (Product $product_verification) {
@@ -158,6 +161,11 @@ class ProductVerificationDatatable extends DataTable
             Column::computed('index')
                 ->title('S.No')
                 ->width(50)
+                ->addClass('text-center'),
+
+            Column::computed('main_product_name')
+                ->title('Product Name')
+                ->width(100)
                 ->addClass('text-center'),
 
             Column::computed('image')

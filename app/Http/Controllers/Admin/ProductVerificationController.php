@@ -19,12 +19,14 @@ class ProductVerificationController extends Controller
 
     public function create()
     {
-        return view('admin.product_verification.create');
+        $products = Product::where('product_type', '0')->get();
+        return view('admin.product_verification.create', compact('products'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'product_id' => 'nullable',
             'name' => 'required|string|max:255',
             'mfg_date' => 'nullable|date',
             'exp_date' => 'nullable|date',
@@ -42,6 +44,7 @@ class ProductVerificationController extends Controller
         try {
             // Create product
             $product = Product::create([
+                'product_id' => $request->product_id,
                 'name' => $request->name,
                 'mfg_date' => $request->mfg_date ?? NULL,
                 'exp_date' => $request->exp_date ?? NULL,
@@ -93,12 +96,14 @@ class ProductVerificationController extends Controller
 
     public function edit(Product $product_verification)
     {
-        return view('admin.product_verification.edit', compact('product_verification'));
+        $products = Product::where('product_type', '0')->get();
+        return view('admin.product_verification.edit', compact('product_verification', 'products'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
+            'product_id' => 'nullable',
             'name' => 'required|string|max:255',
             'mfg_date' => 'nullable|date',
             'exp_date' => 'nullable|date',
@@ -119,6 +124,7 @@ class ProductVerificationController extends Controller
 
             // Update product
             $product->update([
+                'product_id' => $request->product_id,
                 'name' => $request->name,
                 'mfg_date' => $request->mfg_date ?? NULL,
                 'exp_date' => $request->exp_date ?? NULL,

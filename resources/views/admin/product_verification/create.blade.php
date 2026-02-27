@@ -60,6 +60,19 @@
 
                     <div class="row">
                         <div class="col-md-12 my-2">
+                            <label>Product</label>
+                            <select name="product_id" id="product_id" class="form-control" value="{{ old('product_id') }}">
+                                <option value="">Select product</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('product_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-12 my-2">
                             <label>Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control"
                                    value="{{ old('name') }}" placeholder="Product name" required>

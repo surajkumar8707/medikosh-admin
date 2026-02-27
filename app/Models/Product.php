@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    
+
     protected static function boot()
     {
         parent::boot();
@@ -38,11 +38,12 @@ class Product extends Model
         $originalSlug = $slug;
         $count = 1;
 
-        while (self::where('slug', $slug)
-            ->when($ignoreId, function ($query, $ignoreId) {
-                return $query->where('id', '!=', $ignoreId);
-            })
-            ->exists()
+        while (
+            self::where('slug', $slug)
+                ->when($ignoreId, function ($query, $ignoreId) {
+                    return $query->where('id', '!=', $ignoreId);
+                })
+                ->exists()
         ) {
             $slug = $originalSlug . '-' . $count++;
         }
@@ -61,6 +62,11 @@ class Product extends Model
     public function batches()
     {
         return $this->hasMany(ProductBatch::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(self::class, 'product_id', 'id');
     }
 
     public function images()
