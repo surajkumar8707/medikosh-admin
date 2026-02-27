@@ -173,9 +173,9 @@ class ProductVerificationDatatable extends DataTable
                 ->width(100)
                 ->addClass('text-center'),
 
-            Column::make('name')
-                ->title('Name')
-                ->width(200),
+            // Column::make('name')
+            //     ->title('Name')
+            //     ->width(200),
 
             Column::make('certifications')
                 ->title('Certifications')

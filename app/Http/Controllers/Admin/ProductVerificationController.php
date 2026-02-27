@@ -26,7 +26,7 @@ class ProductVerificationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_id' => 'nullable',
+            'product_id' => 'required',
             'name' => 'required|string|max:255',
             'mfg_date' => 'nullable|date',
             'exp_date' => 'nullable|date',
@@ -41,11 +41,13 @@ class ProductVerificationController extends Controller
             'batch_number.*' => 'nullable|string|max:255',
         ]);
 
+        $main_product_detail = Product::find($request->product_id);
+
         try {
             // Create product
             $product = Product::create([
                 'product_id' => $request->product_id,
-                'name' => $request->name,
+                'name' => $main_product_detail->name,
                 'mfg_date' => $request->mfg_date ?? NULL,
                 'exp_date' => $request->exp_date ?? NULL,
                 'manufacturer' => $request->manufacturer,
@@ -103,7 +105,7 @@ class ProductVerificationController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'product_id' => 'nullable',
+            'product_id' => 'required',
             'name' => 'required|string|max:255',
             'mfg_date' => 'nullable|date',
             'exp_date' => 'nullable|date',
@@ -119,13 +121,15 @@ class ProductVerificationController extends Controller
             'existing_batch_number.*' => 'nullable|string|max:255',
         ]);
 
+        $main_product_detail = Product::find($request->product_id);
+
         try {
             $product = Product::findOrFail($id);
 
             // Update product
             $product->update([
                 'product_id' => $request->product_id,
-                'name' => $request->name,
+                'name' => $main_product_detail->name,
                 'mfg_date' => $request->mfg_date ?? NULL,
                 'exp_date' => $request->exp_date ?? NULL,
                 'manufacturer' => $request->manufacturer,

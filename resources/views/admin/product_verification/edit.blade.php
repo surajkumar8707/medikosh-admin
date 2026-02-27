@@ -91,8 +91,8 @@
                     <div class="row">
 
                         <div class="col-md-12 my-2">
-                            <label>Product</label>
-                            <select name="product_id" id="product_id" class="form-control" value="{{ old('product_id', $product_verification->product_id) }}">
+                            <label>Product <span class="text-danger">*</span></label>
+                            <select name="product_id" id="product_id" class="form-control" value="{{ old('product_id', $product_verification->product_id) }}" required>
                                 <option value="">Select product</option>
                                 @foreach ($products as $product)
                                     <option @selected($product_verification->product_id == $product->id) value="{{ $product->id }}">{{ $product->name }}</option>
@@ -103,14 +103,14 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-12 my-2">
+                        {{-- <div class="col-md-12 my-2">
                             <label>Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control"
                                 value="{{ old('name', $product_verification->name) }}" required>
                             @error('name')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 my-2">
                             <label>MFG Date <span class="text-danger">*</span></label>
